@@ -16,16 +16,15 @@ import { useCookies } from "react-cookie";
 import { userID } from "../hooks/page";
 interface PatientData {
   _id: string;
-  name: string | null;
-  disease: string | null;
-  age: string | null;
-  clinic: string | null;
-  fromDate: string | null;
-  toDate: string | null;
-  userOwner: string | null;
-  __v: number | null;
+  name: string;
+  disease: string;
+  age: string;
+  clinic: string;
+  fromDate: string;
+  toDate: string;
+  userOwner: string;
+  __v: number;
 }
-
 import { useToast } from "@/components/ui/use-toast";
 
 import { motion, useInView } from "framer-motion";
@@ -43,7 +42,7 @@ const Doctor: React.FC = () => {
     useState<string>("");
   const userid = userID();
 
-  const invalid = "2023-12-31T18:30:00.000Z";
+  const invalid = ["2023-12-31T18:30:00.000Z", "2024-02-28T18:30:00.000Z"];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +81,6 @@ const Doctor: React.FC = () => {
           prescription: prescriptionText,
           date: selectedPrescriptionDate, // Include the selected date
           userOwner: userid,
-          sent: true,
         }
       );
 
@@ -108,7 +106,7 @@ const Doctor: React.FC = () => {
       //   console.error("Server responded with:", error.response.data);
       // }
 
-      alert("Error sending prescription. Please try again.");
+      // alert("Error sending prescription. Please try again.");
     }
   };
 
@@ -176,7 +174,7 @@ const Doctor: React.FC = () => {
                     <DialogTrigger asChild>
                       <div
                         className={`flex justify-between items-center rounded-xl p-5 hover:shadow-lg transition-all duration-300 cursor-pointer ${
-                          patient.fromDate === invalid
+                          invalid.includes(patient.fromDate)
                             ? "bg-red-200"
                             : "bg-green-100"
                         }`}
@@ -219,7 +217,7 @@ const Doctor: React.FC = () => {
                         onChange={(e) => setWaitingTime(e.target.value)}
                       />
                       <Textarea
-                        placeholder="Add prescription"
+                        placeholder="Add prescription / description"
                         value={prescriptionText}
                         onChange={(e) => setPrescriptionText(e.target.value)}
                       />
@@ -244,7 +242,7 @@ const Doctor: React.FC = () => {
                           className="flex w-full"
                           type="submit"
                         >
-                          Send prescription
+                          Update Information
                         </Button>
                       </div>
                     </DialogContent>

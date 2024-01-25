@@ -44,30 +44,30 @@ router.post("/prescribe", async (req, res) => {
     console.log("Appointment:", appointment);
 
     await appointment.save();
-    const accountSID = process.env.AccountSID;
-    const authTOKEN = process.env.authTOKEN;
-    const client = twilio(accountSID, authTOKEN);
-    console.log("Prescription Uploaded successfully!");
-    const sendSMS = async (body) => {
-      let msgOptions = {
-        from: process.env.TwilioNum,
-        to: process.env.MyNumber,
-        body,
-      };
+    // const accountSID = process.env.AccountSID;
+    // const authTOKEN = process.env.authTOKEN;
+    // const client = twilio(accountSID, authTOKEN);
+    // console.log("Prescription Uploaded successfully!");
+    // const sendSMS = async (body) => {
+    //   let msgOptions = {
+    //     from: process.env.TwilioNum,
+    //     to: process.env.MyNumber,
+    //     body,
+    //   };
 
-      try {
-        // Twilio SMS sending logic
-        await client.messages.create(msgOptions);
-        console.log("SMS sent successfully!");
-      } catch (error) {
-        console.error("Error sending SMS:", error);
-      }
+    //   try {
+    //     // Twilio SMS sending logic
+    //     await client.messages.create(msgOptions);
+    //     console.log("SMS sent successfully!");
+    //   } catch (error) {
+    //     console.error("Error sending SMS:", error);
+    //   }
 
-      // Additional logic related to SMS sending (if any)
-    };
-    sendSMS(
-      "Your Prescription/Appointment has been updated. Please check Quick-y for more information"
-    );
+    //   // Additional logic related to SMS sending (if any)
+    // };
+    // sendSMS(
+    //   "Your Prescription/Appointment has been updated. Please check Quick-y for more information"
+    // );
 
     res.status(201).json({ message: "Prescription Uploaded successfully!" });
   } catch (error) {
